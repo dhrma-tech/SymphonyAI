@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { Search, ArrowLeft, Zap, Terminal, Palette, Filter, Bookmark, ArrowRight, Code, Eye, Layers, Database, ShieldCheck, FileText } from "lucide-react";
 import { RevealText } from "@/components/shared/RevealText";
+import { DetailModal } from "@/components/shared/DetailModal";
 
 type LibraryMode = "selection" | "creator" | "developer";
 
@@ -126,6 +127,7 @@ function SelectionView({ onSelect }: { onSelect: (m: LibraryMode) => void }) {
 
 function InteriorView({ mode, onBack }: { mode: LibraryMode, onBack: () => void }) {
   const isCreator = mode === "creator";
+  const [selectedSkill, setSelectedSkill] = useState<any>(null);
 
   return (
     <motion.section 
@@ -135,6 +137,13 @@ function InteriorView({ mode, onBack }: { mode: LibraryMode, onBack: () => void 
       exit="exit"
       className={cn("min-h-screen", isCreator ? "text-primary" : "text-white")}
     >
+      <DetailModal 
+        isOpen={!!selectedSkill} 
+        onClose={() => setSelectedSkill(null)} 
+        item={selectedSkill} 
+        mode={isCreator ? "creator" : "developer"} 
+      />
+
       {/* Liquid Header */}
       <motion.div 
         layoutId={isCreator ? "mode-bg-creator" : "mode-bg-developer"}
@@ -243,7 +252,7 @@ function InteriorView({ mode, onBack }: { mode: LibraryMode, onBack: () => void 
 
             <motion.div variants={itemVariants} className="grid grid-cols-1 xl:grid-cols-2 gap-8">
               {(isCreator ? CREATOR_SKILLS : DEVELOPER_SKILLS).map((skill, i) => (
-                <SkillCard key={i} skill={skill} isCreator={isCreator} index={i} />
+                <SkillCard key={i} skill={skill} isCreator={isCreator} index={i} onClick={() => setSelectedSkill(skill)} />
               ))}
             </motion.div>
           </div>
@@ -253,15 +262,16 @@ function InteriorView({ mode, onBack }: { mode: LibraryMode, onBack: () => void 
   );
 }
 
-function SkillCard({ skill, isCreator, index }: { skill: any, isCreator: boolean, index: number }) {
+function SkillCard({ skill, isCreator, index, onClick }: { skill: any, isCreator: boolean, index: number, onClick: () => void }) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4 + index * 0.1 }}
       whileHover={{ y: -8, scale: 1.02 }}
+      onClick={onClick}
       className={cn(
-        "p-10 rounded-[3rem] transition-all group relative overflow-hidden border",
+        "p-10 rounded-[3rem] transition-all group relative overflow-hidden border cursor-pointer",
         isCreator 
           ? "bg-white border-border-subtle shadow-warm hover:shadow-2xl" 
           : "bg-[#0A0A0A] border-white/10 hover:border-white/20 shadow-2xl"

@@ -6,7 +6,7 @@ import {
   Zap, Maximize2, Minimize2, ChevronLeft,
   CheckCircle2, Circle, Clock, Edit3, 
   Layers, Code, Smartphone, Layout, X,
-  FileText, Sparkles, User, Palette, Terminal, ShieldCheck
+  FileText, Sparkles, User, Palette, Terminal, ShieldCheck, History, FolderOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/shared/Button";
@@ -21,6 +21,7 @@ import { ThinkingAnimation } from "@/components/shared/Thinking";
 import { ProgressRing } from "@/components/shared/ProgressRing";
 import { SkillToolbox } from "@/components/shared/SkillToolbox";
 import { ArtifactEngine } from "@/components/shared/ArtifactEngine";
+import Link from "next/link";
 
 type AgentRole = "orchestrator" | "architect" | "designer" | "security" | "user";
 
@@ -32,7 +33,13 @@ interface Message {
 }
 
 export default function WorkspacePage() {
-  const { isFocusMode, setFocusMode, activePhase, setActivePhase, isSidebarOpen, setSidebarOpen } = useWorkspace();
+  const { 
+    isFocusMode, setFocusMode, 
+    activePhase, setActivePhase, 
+    isSidebarOpen, setSidebarOpen,
+    history, currentProject, setCurrentProject 
+  } = useWorkspace();
+  
   const [input, setInput] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const [orchestrationProgress, setOrchestrationProgress] = useState(0);
@@ -138,7 +145,7 @@ export default function WorkspacePage() {
         isStreaming={isStreaming}
       />
 
-      {/* Sidebar */}
+      {/* Sidebar with History */}
       <AnimatePresence>
         {!isFocusMode && isSidebarOpen && !isMobile && (
           <motion.aside 
@@ -148,27 +155,70 @@ export default function WorkspacePage() {
             className="border-r border-border-subtle flex flex-col bg-section shrink-0 overflow-hidden"
           >
             <div className="p-6 flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <Link href="/" className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-black rounded-full" />
                 <span className="text-base font-medium tracking-tight">SymphonyAI</span>
-              </div>
+              </Link>
+              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 rounded-lg">
+                <Plus className="w-4 h-4" />
+              </Button>
             </div>
             
-            <nav className="flex-grow px-2 overflow-y-auto">
-              <div className="text-[10px] uppercase tracking-widest text-muted px-4 py-3 mb-1 font-bold">Agents in Project</div>
-              <div className="space-y-1">
+            <nav className="flex-grow px-2 overflow-y-auto no-scrollbar">
+              <div className="text-[10px] uppercase tracking-widest text-muted px-4 py-3 mb-1 font-bold flex items-center gap-2">
+                <Clock className="w-3 h-3" /> Recent Projects
+              </div>
+              <div className="space-y-0.5">
+                {history.length > 0 ? (
+                  history.map((project) => (
+                    <button 
+                      key={project.id} 
+                      onClick={() => setCurrentProject(project)}
+                      className={cn(
+                        "w-full text-left px-4 py-3 text-xs rounded-xl transition-all group flex items-center gap-3",
+                        currentProject?.id === project.id ? "bg-white shadow-sm text-primary font-semibold" : "text-secondary hover:bg-white/50"
+                      )}
+                    >
+                      <FolderOpen className={cn("w-3.5 h-3.5", currentProject?.id === project.id ? "text-primary" : "text-muted")} />
+                      <span className="truncate">{project.title}</span>
+                    </button>
+                  ))
+                ) : (
+                  <div className="px-4 py-8 text-center">
+                    <div className="text-[10px] text-muted font-medium italic">No past orchestrations</div>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-8">
+                <div className="text-[10px] uppercase tracking-widest text-muted px-4 py-3 mb-1 font-bold flex items-center gap-2">
+                  <User className="w-3 h-3" /> Team Agents
+                </div>
                 {[
                   { name: "Lead Orchestrator", role: "orchestrator", color: "bg-black" },
                   { name: "System Architect", role: "architect", color: "bg-blue-600" },
                   { name: "Interface Designer", role: "designer", color: "bg-orange-500" },
                 ].map((agent) => (
-                  <div key={agent.name} className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-white transition-all">
-                    <div className={cn("w-2 h-2 rounded-full", agent.color)} />
-                    <span className="text-xs font-medium text-secondary">{agent.name}</span>
+                  <div key={agent.name} className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl hover:bg-white/50 transition-all cursor-default">
+                    <div className={cn("w-1.5 h-1.5 rounded-full", agent.color)} />
+                    <span className="text-[11px] font-medium text-secondary">{agent.name}</span>
                   </div>
                 ))}
               </div>
             </nav>
+
+            <div className="p-4 border-t border-border-subtle bg-white/30">
+               <div className="p-4 bg-black text-white rounded-2xl flex items-center justify-between group cursor-pointer hover:bg-black/90 transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold text-xs">U</div>
+                    <div>
+                      <div className="text-[10px] font-bold uppercase tracking-widest opacity-60">Pro Account</div>
+                      <div className="text-xs font-semibold">User Profile</div>
+                    </div>
+                  </div>
+                  <MoreVertical className="w-4 h-4 opacity-40 group-hover:opacity-100 transition-opacity" />
+               </div>
+            </div>
           </motion.aside>
         )}
       </AnimatePresence>
@@ -195,7 +245,9 @@ export default function WorkspacePage() {
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
                   <Layers className="w-4 h-4" />
-                  <span className="text-sm font-semibold tracking-tight">Agent Collaboration</span>
+                  <span className="text-sm font-semibold tracking-tight">
+                    {currentProject ? currentProject.title : "New Orchestration"}
+                  </span>
                 </div>
                 <div className="h-4 w-px bg-border-subtle" />
                 <div className="flex items-center gap-1">
@@ -298,16 +350,21 @@ export default function WorkspacePage() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <BlueprintCard icon={Edit3} title="Project Synopsis" content={state.synopsis} />
+                    <BlueprintCard icon={Edit3} title="Project Synopsis" content={currentProject?.synopsis || state.synopsis} />
                     <BlueprintCard icon={Code} title="Technical Stack" content={state.tech} />
                     <BlueprintCard icon={Layout} title="Visual Tone" content={state.tone} />
                     <BlueprintCard icon={Smartphone} title="Target Audience" content={state.audience} />
                   </div>
 
                   {activePhase >= 2 && (
-                    <Button onClick={() => { setIsArtifactOpen(true); setIsStreaming(true); }} className="w-full h-16 rounded-[1.5rem] gap-3 text-sm font-bold uppercase tracking-widest shadow-xl">
-                      Generate Artifacts <Sparkles className="w-4 h-4" />
-                    </Button>
+                    <div className="grid grid-cols-2 gap-4">
+                      <Button onClick={() => { setIsArtifactOpen(true); setIsStreaming(true); }} className="h-16 rounded-[1.5rem] gap-3 text-sm font-bold uppercase tracking-widest shadow-xl">
+                        Generate Artifacts <Sparkles className="w-4 h-4" />
+                      </Button>
+                      <Button variant="secondary" className="h-16 rounded-[1.5rem] gap-3 text-sm font-bold uppercase tracking-widest border-border-subtle">
+                        Refine Plan <History className="w-4 h-4" />
+                      </Button>
+                    </div>
                   )}
                 </div>
               </div>
