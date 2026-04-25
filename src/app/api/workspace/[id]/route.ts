@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { db } from "@/lib/db";
 
 export async function GET(
   req: Request,
@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const project = await prisma.project.findUnique({
+    const project = await db.project.findUnique({
       where: { id },
     });
     if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
@@ -24,7 +24,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
-    const project = await prisma.project.update({
+    const project = await db.project.update({
       where: { id },
       data: {
         ...body,

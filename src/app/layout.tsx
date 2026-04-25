@@ -5,6 +5,7 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
 });
 
 const geistMono = Geist_Mono({
@@ -19,16 +20,14 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "SymphonyAI — From idea to execution.",
-  description: "Structured AI workflows for planning, designing, and building digital products.",
+  title: "SymphonyAI — The Prompt Operating System",
+  description: "Convert your ideas into structured, tool-specific AI prompts. Build faster with curated workflows.",
 };
 
 import { Grain } from "@/components/shared/Grain";
-import { SmoothScroll } from "@/components/shared/SmoothScroll";
 import { CommandBar } from "@/components/shared/CommandBar";
-import { ThemeProvider } from "@/lib/context/ThemeContext";
-import { SpotlightCursor } from "@/components/shared/SpotlightCursor";
-import { DesignPlayground } from "@/components/shared/DesignPlayground";
+import { AuthProvider } from "@/lib/context/AuthProvider";
+import { WorkspaceProvider } from "@/lib/context/WorkspaceContext";
 
 export default function RootLayout({
   children,
@@ -40,16 +39,14 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <body className="min-h-full selection:bg-black selection:text-white transition-colors duration-500">
-        <ThemeProvider>
-          <SmoothScroll>
+      <body className="min-h-full selection:bg-black selection:text-white bg-white text-primary">
+        <AuthProvider>
+          <WorkspaceProvider>
             <Grain />
-            <SpotlightCursor />
-            <DesignPlayground />
             <CommandBar />
             {children}
-          </SmoothScroll>
-        </ThemeProvider>
+          </WorkspaceProvider>
+        </AuthProvider>
       </body>
     </html>
   );

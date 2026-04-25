@@ -1,126 +1,199 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowRight, Sparkles, Zap, ShieldCheck, Clock, Layers, Code, Palette, Smartphone, Layout, Rocket } from "lucide-react";
+import { Button } from "@/components/shared/Button";
 import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
-import { Button } from "@/components/shared/Button";
-import { RevealText } from "@/components/shared/RevealText";
-import { ArrowRight, Zap, Palette, Terminal, Search } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-white text-primary font-sans overflow-hidden">
+    <main className="min-h-screen bg-white font-sans selection:bg-black selection:text-white overflow-x-hidden">
       <Header />
-      
+
       {/* Hero Section */}
-      <section className="relative pt-40 pb-32 md:pt-60 md:pb-52 px-6">
-        <div className="max-w-[1400px] mx-auto text-center relative z-10">
+      <section className="relative pt-40 pb-32 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-section border border-border-subtle mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-section rounded-full border border-border-subtle mb-10"
           >
-            <div className="w-2 h-2 bg-black rounded-full animate-pulse" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Cinematic Orchestration v1.0</span>
+            <Sparkles className="w-3.5 h-3.5 text-secondary" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-muted">The Prompt Operating System</span>
           </motion.div>
 
-          <RevealText 
-            text="From idea to execution." 
-            className="text-7xl md:text-[10rem] font-serif leading-[0.85] tracking-tighter mb-12"
-          />
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-6xl md:text-8xl lg:text-9xl font-serif tracking-tighter leading-[0.85] mb-10 max-w-5xl mx-auto"
+          >
+            Turn ideas into <span className="text-muted italic">structured</span> execution.
+          </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="text-muted text-xl md:text-2xl max-w-2xl mx-auto mb-16 leading-relaxed font-normal"
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-muted max-w-2xl mx-auto font-light leading-relaxed mb-12"
           >
-            The world's most immersive AI orchestrator. Architect complex digital products with cinematic precision.
+            SymphonyAI bridges the gap between raw ideas and complex AI builds. Generate tool-specific prompts for planning, designing, and engineering digital products.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
+            transition={{ delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
             <Link href="/workspace">
-              <Button className="h-16 px-12 rounded-[1.25rem] gap-3 text-sm font-bold uppercase tracking-widest shadow-xl shadow-black/5 active:scale-95 transition-all">
-                Enter Workspace <ArrowRight className="w-4 h-4" />
+              <Button className="h-16 px-10 rounded-2xl text-[10px] uppercase tracking-widest font-bold shadow-2xl">
+                Start Building <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
             <Link href="/library">
-              <Button variant="secondary" className="h-16 px-12 rounded-[1.25rem] text-sm font-bold uppercase tracking-widest border-border-subtle bg-white hover:bg-section active:scale-95 transition-all">
+              <Button variant="secondary" className="h-16 px-10 rounded-2xl text-[10px] uppercase tracking-widest font-bold border-border-subtle">
                 Explore Library
               </Button>
             </Link>
           </motion.div>
         </div>
 
-        {/* Cinematic Backdrop Ornament */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-20">
-          <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05)_0%,transparent_70%)]" />
+        {/* Abstract Hero Visual */}
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.03),transparent_70%)]" />
+          <motion.div 
+            animate={{ rotate: 360 }}
+            transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-black/[0.02] rounded-full"
+          />
+          <motion.div 
+            animate={{ rotate: -360 }}
+            transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-black/[0.03] rounded-full"
+          />
         </div>
       </section>
 
-      {/* Bento Showcase */}
-      <section className="py-32 px-6 bg-section">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 interactive-card p-12 bg-white border border-border-subtle rounded-[3rem] shadow-warm flex flex-col justify-between group overflow-hidden relative">
-              <div className="relative z-10">
-                <div className="w-12 h-12 bg-section rounded-2xl flex items-center justify-center mb-12">
-                  <Terminal className="w-6 h-6" />
-                </div>
-                <h3 className="text-5xl font-serif mb-6 leading-tight">Prompt <br /> Operating System</h3>
-                <p className="text-muted text-lg max-w-md">A structured workspace for high-stakes AI orchestration. Multi-agent coordination with full persistence.</p>
-              </div>
-              <div className="absolute right-0 bottom-0 w-[40%] h-[60%] bg-gradient-to-tl from-black/[0.02] to-transparent rounded-tl-[10rem] translate-y-8 translate-x-8 group-hover:translate-y-4 group-hover:translate-x-4 transition-transform duration-700" />
-            </div>
+      {/* Concrete Use Cases */}
+      <section className="py-32 px-6 bg-section/50 border-y border-border-subtle">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <UseCase 
+              icon={Layout} 
+              title="Landing Pages" 
+              desc="Convert a simple description into a high-end, cinematic web experience with specific prompts for Cursor and Framer Motion."
+            />
+            <UseCase 
+              icon={Smartphone} 
+              title="SaaS Dashboards" 
+              desc="Generate relational schemas, authentication logic, and responsive UI nodes designed for production-ready products."
+            />
+            <UseCase 
+              icon={Rocket} 
+              title="Full-Stack Apps" 
+              desc="Orchestrate multi-phase builds across Claude and GitHub Copilot with synchronized prompts for frontend and backend."
+            />
+          </div>
+        </div>
+      </section>
 
-            <div className="interactive-card p-12 bg-white border border-border-subtle rounded-[3rem] shadow-warm flex flex-col justify-between group">
-              <div>
-                <div className="w-12 h-12 bg-section rounded-2xl flex items-center justify-center mb-12">
-                  <Palette className="w-6 h-6" />
-                </div>
-                <h3 className="text-4xl font-serif mb-6">Design Hub</h3>
-                <p className="text-muted">Extract and mirror the world's best design systems instantly.</p>
-              </div>
-              <Link href="/designs" className="mt-8 text-xs font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all">
-                Browse Palettes <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+      {/* 3-Step Flow */}
+      <section className="py-32 px-6">
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <div className="text-[10px] uppercase tracking-widest font-bold text-muted mb-4">The Workflow</div>
+          <h2 className="text-4xl md:text-6xl font-serif tracking-tight">Three steps to execution.</h2>
+        </div>
 
-            <div className="interactive-card p-12 bg-white border border-border-subtle rounded-[3rem] shadow-warm flex flex-col justify-between group">
-              <div>
-                <div className="w-12 h-12 bg-section rounded-2xl flex items-center justify-center mb-12">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <h3 className="text-4xl font-serif mb-6">Expert Skills</h3>
-                <p className="text-muted">Master the art of prompting with 50+ specialized LLM techniques.</p>
-              </div>
-              <Link href="/skills" className="mt-8 text-xs font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-4 transition-all">
-                View Techniques <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+        <div className="max-w-5xl mx-auto relative">
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border-subtle -translate-x-1/2 hidden md:block" />
+          
+          <div className="space-y-32 relative z-10">
+            <Step 
+              number="01" 
+              title="Describe your vision." 
+              desc="Type your idea in plain English. Our Discovery engine analyzes intent, technology needs, and project scope instantly."
+              align="left"
+            />
+            <Step 
+              number="02" 
+              title="Refine the architecture." 
+              desc="Answer clarifying questions to sharpen the blueprint. We suggest features, tech stacks, and visual design tokens."
+              align="right"
+            />
+            <Step 
+              number="03" 
+              title="Get tool-ready prompts." 
+              desc="SymphonyAI generates optimized prompts for each phase. Copy, paste into Claude or Cursor, and watch your product come to life."
+              align="left"
+            />
+          </div>
+        </div>
+      </section>
 
-            <div className="md:col-span-2 interactive-card p-12 bg-[#0A0A0A] text-white rounded-[3rem] flex items-center justify-between group overflow-hidden relative">
-              <div className="relative z-10 max-w-xl">
-                <h3 className="text-5xl font-serif mb-6">Ready to build?</h3>
-                <p className="text-white/60 text-lg mb-10">Join thousands of architects building the future of AI orchestration.</p>
-                <Link href="/login">
-                  <Button className="bg-white text-black hover:bg-white/90 rounded-2xl px-10 h-14 font-bold uppercase tracking-widest text-xs">Get Started ↗</Button>
-                </Link>
-              </div>
-              <div className="hidden md:block absolute right-[-10%] top-[-10%] w-[50%] h-[120%] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_70%)] animate-pulse" />
-            </div>
+      {/* Pillars Section */}
+      <section className="py-32 px-6 bg-black text-white">
+        <div className="max-w-7xl mx-auto">
+          <header className="mb-20">
+            <h2 className="text-4xl md:text-6xl font-serif tracking-tight mb-8">Beyond generation.</h2>
+            <p className="text-lg text-white/40 max-w-xl font-light">Curated resources to accelerate every layer of your digital product build.</p>
+          </header>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <PillarCard icon={Layers} title="Prompt Library" desc="Curated patterns for UI, Logic, and AI." href="/library" />
+            <PillarCard icon={Layout} title="Templates" desc="Ready-to-use project blueprints." href="/templates" />
+            <PillarCard icon={Zap} title="LLM Skills" desc="Advanced techniques for prompt engineering." href="/library" />
+            <PillarCard icon={Palette} title="Design System" desc="Visual tokens, colors, and font pairings." href="/library" />
           </div>
         </div>
       </section>
 
       <Footer />
     </main>
+  );
+}
+
+function UseCase({ icon: Icon, title, desc }: any) {
+  return (
+    <div className="space-y-6 group">
+      <div className="w-14 h-14 bg-white border border-border-subtle rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all shadow-sm">
+        <Icon className="w-6 h-6 text-secondary" />
+      </div>
+      <h3 className="text-2xl font-serif tracking-tight">{title}</h3>
+      <p className="text-sm text-muted font-light leading-relaxed">{desc}</p>
+    </div>
+  );
+}
+
+function Step({ number, title, desc, align }: any) {
+  return (
+    <div className={cn("flex flex-col md:flex-row items-center gap-12", align === "right" && "md:flex-row-reverse")}>
+      <div className="w-full md:w-1/2 flex flex-col justify-center">
+        <div className={cn("space-y-6 px-4 md:px-12", align === "right" ? "text-left md:text-right" : "text-left")}>
+          <div className="text-5xl font-serif text-muted italic opacity-20">{number}</div>
+          <h3 className="text-3xl font-serif tracking-tight">{title}</h3>
+          <p className="text-base text-muted font-light leading-relaxed">{desc}</p>
+        </div>
+      </div>
+      <div className="w-full md:w-1/2" />
+    </div>
+  );
+}
+
+function PillarCard({ icon: Icon, title, desc, href }: any) {
+  return (
+    <Link href={href} className="block p-10 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-white/10 transition-all group h-full">
+      <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform">
+        <Icon className="w-5 h-5 text-white" />
+      </div>
+      <h3 className="text-xl font-medium mb-3">{title}</h3>
+      <p className="text-sm text-white/40 font-light leading-relaxed mb-8">{desc}</p>
+      <div className="text-[9px] uppercase tracking-widest font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+        Explore <ArrowRight className="w-3 h-3" />
+      </div>
+    </Link>
   );
 }

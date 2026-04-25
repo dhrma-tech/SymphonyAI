@@ -1,55 +1,54 @@
+"use client";
+
 import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="bg-section border-t border-border mt-auto">
-      <div className="max-w-[1400px] mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="col-span-1 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-6">
-              <div className="w-5 h-5 bg-black rounded-full" />
-              <span className="font-normal text-base tracking-tight">SymphonyAI</span>
-            </Link>
-            <p className="text-muted text-sm leading-relaxed max-w-[200px]">
-              Structured AI workflows for digital product development.
-            </p>
+    <footer className="bg-white border-t border-border-subtle py-20 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="col-span-1 md:col-span-1 space-y-6">
+          <div className="flex items-center gap-2">
+            <div className="w-5 h-5 bg-black rounded-md" />
+            <span className="font-semibold tracking-tighter">SymphonyAI</span>
           </div>
-          
-          <div>
-            <ul className="space-y-2">
-              <li><Link href="/workspace" className="text-muted text-sm hover:text-primary transition-colors">Workspace</Link></li>
-              <li><Link href="/library" className="text-muted text-sm hover:text-primary transition-colors">Library</Link></li>
-              <li><Link href="/skills" className="text-muted text-sm hover:text-primary transition-colors">LLM Skills</Link></li>
-              <li><Link href="/designs" className="text-muted text-sm hover:text-primary transition-colors">Design Hub</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-medium mb-4">Resources</h4>
-            <ul className="space-y-2">
-              <li><Link href="/templates" className="text-muted text-sm hover:text-primary transition-colors">Templates</Link></li>
-              <li><Link href="#" className="text-muted text-sm hover:text-primary transition-colors">Documentation</Link></li>
-              <li><Link href="#" className="text-muted text-sm hover:text-primary transition-colors">API</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-sm font-medium mb-4">Company</h4>
-            <ul className="space-y-2">
-              <li><Link href="#" className="text-muted text-sm hover:text-primary transition-colors">About</Link></li>
-              <li><Link href="#" className="text-muted text-sm hover:text-primary transition-colors">Privacy</Link></li>
-              <li><Link href="#" className="text-muted text-sm hover:text-primary transition-colors">Terms</Link></li>
-            </ul>
-          </div>
+          <p className="text-xs text-muted leading-relaxed max-w-xs">
+            The Prompt Operating System for high-performance AI-assisted development. Convert ideas into execution phases instantly.
+          </p>
         </div>
-        
-        <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted text-xs">© 2026 SymphonyAI. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="#" className="text-muted hover:text-primary text-xs transition-colors">Twitter</Link>
-            <Link href="#" className="text-muted hover:text-primary text-xs transition-colors">GitHub</Link>
-            <Link href="#" className="text-muted hover:text-primary text-xs transition-colors">Discord</Link>
-          </div>
+
+        <div>
+          <h4 className="text-[10px] uppercase tracking-widest font-bold text-muted mb-6">Product</h4>
+          <ul className="space-y-4">
+            <li><Link href="/workspace" className="text-xs text-secondary hover:text-primary transition-colors">Workspace</Link></li>
+            <li><Link href="/library" className="text-xs text-secondary hover:text-primary transition-colors">Pattern Library</Link></li>
+            <li><Link href="/templates" className="text-xs text-secondary hover:text-primary transition-colors">Templates</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-[10px] uppercase tracking-widest font-bold text-muted mb-6">Resources</h4>
+          <ul className="space-y-4">
+            <li><Link href="#" className="text-xs text-secondary hover:text-primary transition-colors">Documentation</Link></li>
+            <li><Link href="#" className="text-xs text-secondary hover:text-primary transition-colors">API Guide</Link></li>
+            <li><Link href="#" className="text-xs text-secondary hover:text-primary transition-colors">Changelog</Link></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="text-[10px] uppercase tracking-widest font-bold text-muted mb-6">Connect</h4>
+          <ul className="space-y-4">
+            <li><Link href="#" className="text-xs text-secondary hover:text-primary transition-colors">GitHub</Link></li>
+            <li><Link href="#" className="text-xs text-secondary hover:text-primary transition-colors">Twitter</Link></li>
+            <li><Link href="#" className="text-xs text-secondary hover:text-primary transition-colors">Support</Link></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-border-subtle flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-[10px] text-muted uppercase font-bold tracking-widest">© 2026 SymphonyAI Orchestrator. All rights reserved.</p>
+        <div className="flex gap-8">
+          <Link href="#" className="text-[10px] text-muted uppercase font-bold tracking-widest hover:text-primary">Privacy Policy</Link>
+          <Link href="#" className="text-[10px] text-muted uppercase font-bold tracking-widest hover:text-primary">Terms of Service</Link>
         </div>
       </div>
     </footer>

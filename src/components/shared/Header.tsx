@@ -5,19 +5,21 @@ import Link from "next/link";
 import { Button } from "@/components/shared/Button";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, LogOut, User, FolderOpen } from "lucide-react";
 import { MobileNav } from "./MobileNav";
+import { useSession, signOut } from "next-auth/react";
 
 export function Header() {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-[100] h-20 flex items-center px-6 md:px-12 glass border-b border-border-subtle/50">
+      <header className="fixed top-0 left-0 right-0 z-[100] h-20 flex items-center px-6 md:px-12 bg-white/80 backdrop-blur-md border-b border-border-subtle/50">
         <nav className="max-w-[1400px] w-full mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-5 h-5 bg-black rounded-full transition-transform group-hover:scale-110" />
+            <div className="w-5 h-5 bg-black rounded-md transition-transform group-hover:scale-110 shadow-sm" />
             <span className="text-base font-semibold tracking-tighter">SymphonyAI</span>
           </Link>
 
@@ -26,8 +28,8 @@ export function Header() {
               <Link 
                 href="/workspace" 
                 className={cn(
-                  "text-xs font-normal transition-colors tracking-tight",
-                  pathname.startsWith("/workspace") ? "text-primary font-medium" : "text-secondary hover:text-primary"
+                  "text-[11px] uppercase tracking-widest font-bold transition-colors",
+                  pathname.startsWith("/workspace") ? "text-primary" : "text-muted hover:text-primary"
                 )}
               >
                 Workspace
@@ -35,36 +37,41 @@ export function Header() {
               <Link 
                 href="/library" 
                 className={cn(
-                  "text-xs font-normal transition-colors tracking-tight",
-                  pathname === "/library" ? "text-primary font-medium" : "text-secondary hover:text-primary"
+                  "text-[11px] uppercase tracking-widest font-bold transition-colors",
+                  pathname === "/library" ? "text-primary" : "text-muted hover:text-primary"
                 )}
               >
                 Library
               </Link>
               <Link 
-                href="/skills" 
+                href="/templates" 
                 className={cn(
-                  "text-xs font-normal transition-colors tracking-tight",
-                  pathname === "/skills" ? "text-primary font-medium" : "text-secondary hover:text-primary"
+                  "text-[11px] uppercase tracking-widest font-bold transition-colors",
+                  pathname === "/templates" ? "text-primary" : "text-muted hover:text-primary"
                 )}
               >
-                LLM Skills
-              </Link>
-              <Link 
-                href="/designs" 
-                className={cn(
-                  "text-xs font-normal transition-colors tracking-tight",
-                  pathname === "/designs" ? "text-primary font-medium" : "text-secondary hover:text-primary"
-                )}
-              >
-                Design Hub
+                Templates
               </Link>
             </div>
 
             <div className="flex items-center gap-4">
-              <Link href="/login" className="hidden sm:block">
-                <Button size="sm" className="rounded-full shadow-sm text-xs font-medium">Sign In</Button>
-              </Link>
+              {session ? (
+                <div className="hidden sm:flex items-center gap-4 p-1.5 bg-section rounded-full border border-border-subtle">
+                  <div className="w-7 h-7 rounded-full bg-black text-white flex items-center justify-center text-[10px] font-bold">
+                    {session.user?.name?.[0]}
+                  </div>
+                  <button 
+                    onClick={() => signOut()}
+                    className="pr-2 text-[10px] uppercase tracking-widest font-bold text-muted hover:text-red-600 transition-colors flex items-center gap-1.5"
+                  >
+                    <LogOut className="w-3 h-3" /> Sign Out
+                  </button>
+                </div>
+              ) : (
+                <Link href="/login" className="hidden sm:block">
+                  <Button size="sm" className="rounded-full shadow-sm text-[10px] uppercase tracking-widest font-bold px-6 h-10">Sign In</Button>
+                </Link>
+              )}
               
               <button 
                 onClick={() => setMobileNavOpen(true)}

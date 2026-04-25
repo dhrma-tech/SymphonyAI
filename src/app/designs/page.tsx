@@ -7,7 +7,6 @@ import { Button } from "@/components/shared/Button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ArrowRight, Palette, Layers, Smartphone, Bookmark } from "lucide-react";
-import { useTheme } from "@/lib/context/ThemeContext";
 import { RevealText } from "@/components/shared/RevealText";
 
 type DesignTab = "copy" | "resources" | "colors";
@@ -43,7 +42,6 @@ const itemVariants = {
 
 export default function DesignsPage() {
   const [activeTab, setActiveTab] = useState<DesignTab>("copy");
-  const { setPreviewPalette } = useTheme();
 
   return (
     <main className="min-h-screen bg-white font-sans overflow-x-hidden">
@@ -201,7 +199,7 @@ export default function DesignsPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {PALETTES.map((palette, i) => (
-                    <PaletteCard key={palette.name} palette={palette} index={i} setPreview={setPreviewPalette} />
+                    <PaletteCard key={palette.name} palette={palette} index={i} />
                   ))}
                 </div>
               </motion.section>
@@ -248,15 +246,6 @@ function DesignCard({ refData, index }: { refData: any, index: number }) {
 function PaletteCard({ palette, index, setPreview }: any) {
   return (
     <motion.div 
-      variants={itemVariants}
-      onMouseEnter={() => setPreview({
-        background: palette.colors[1],
-        section: palette.colors[3] || palette.colors[1],
-        primary: palette.colors[0],
-        text: palette.colors[0],
-        accent: palette.colors[2]
-      })}
-      onMouseLeave={() => setPreview(null)}
       whileHover={{ scale: 1.02 }}
       className="bg-white border border-border-subtle rounded-[2.5rem] overflow-hidden shadow-warm transition-all cursor-pointer group"
     >
