@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #ffffff;
+  --color-section: #f5f5f5;
+  --color-warm: rgba(245, 242, 239, 0.8);
+  
+  --color-primary: #000000;
+  --color-secondary: #4e4e4e;
+  --color-muted: #777169;
+  
+  --color-border: #e5e5e5;
+  --color-border-subtle: rgba(0, 0, 0, 0.05);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-serif: var(--font-serif), serif;
+
+  --shadow-card: 0 0 0 1px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-warm: 0 6px 16px rgba(78,50,23,0.04);
+  
+  --radius-pill: 9999px;
+}
+
+:root {
+  --background: var(--color-background, #ffffff);
+  --section: var(--color-section, #f5f5f5);
+  --primary: var(--color-primary, #000000);
+  --text: var(--color-text, #000000);
+  --accent: var(--color-accent, #FF5C00);
+  --card-radius: 2.5rem;
+  --glass-blur: 12px;
+
+  --foreground: var(--text);
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.04em;
+  font-weight: 300;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 200px;
+  gap: 1.5rem;
+}
+
+.bento-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2rem;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+}
+
+.cinematic-mask {
+  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.interactive-card {
+  border-radius: var(--card-radius);
+  transition: all 0.5s cubic-bezier(0.2, 0.65, 0.3, 0.9);
+}
