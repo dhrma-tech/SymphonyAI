@@ -71,6 +71,12 @@ h1, h2, h3, h4 {
   scrollbar-width: none;
 }
 
+@media (max-width: 768px) {
+  .workspace-container {
+    padding: 1rem;
+  }
+}
+
 /* Utility Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
