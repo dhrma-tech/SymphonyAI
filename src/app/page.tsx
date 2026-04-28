@@ -16,14 +16,6 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative pt-40 pb-32 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-section rounded-full border border-border-subtle mb-10"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-secondary" />
-            <span className="text-[10px] font-bold uppercase tracking-widest text-muted">The Prompt Operating System</span>
-          </motion.div>
 
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
