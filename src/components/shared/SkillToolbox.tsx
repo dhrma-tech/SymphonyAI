@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Zap, Search, Bookmark, ArrowRight, Sparkles, Terminal, Palette, Code } from "lucide-react";
+import { X, Zap, Search, Bookmark, ArrowRight, Sparkles, Terminal, Palette, Code, type LucideIcon } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -13,10 +13,18 @@ const SKILLS = [
   { id: "sss", title: "Step-by-Step Sync", icon: Sparkles, category: "Planning", desc: "Synchronize multiple agents across phases." },
 ];
 
+type Skill = {
+  id: string;
+  title: string;
+  icon: LucideIcon;
+  category: string;
+  desc: string;
+};
+
 interface SkillToolboxProps {
   isOpen: boolean;
   onClose: () => void;
-  onInject: (skill: any) => void;
+  onInject: (skill: Skill) => void;
 }
 
 export function SkillToolbox({ isOpen, onClose, onInject }: SkillToolboxProps) {

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { X, User, Library, Zap, Palette, Home, Layout } from "lucide-react";
 import { Button } from "@/components/shared/Button";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -82,8 +83,4 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
       )}
     </AnimatePresence>
   );
-}
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(" ");
 }

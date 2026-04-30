@@ -44,6 +44,10 @@ model User {
   sessions      Session[]
   projects      Project[]
   prompts       Prompt[]
+  decisions     WorkflowDecision[]
+  workspaceContext WorkspaceContext?
+  promptRatings PromptRating[]
+  projectDecisions Decision[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -60,16 +64,107 @@ model Project {
   id            String   @id @default(cuid())
   title         String
   idea          String
+  originalIdea  String?
   synopsis      String?
   features      String?  // JSON string
   design        String?  // JSON string
   phases        String?  // JSON string
+  briefPack     String?  // JSON string
+  blueprintAnnotations String? // JSON string
+  sessionGraph  String?  // JSON string
+  designChoices String?  // JSON string
+  workflowPhases String? // JSON string
+  pendingDecisions String? // JSON string
+  briefValidated Boolean @default(false)
+  stage         String   @default("BRIEF")
+  pipelineMode  String?
   activePhase   Int      @default(1)
+  activeStage   String   @default("BRIEF")
   status        String   @default("Ideation")
   userId        String?
   user          User?    @relation(fields: [userId], references: [id])
+  artifacts     WorkflowArtifact[]
+  decisions     WorkflowDecision[]
+  decisionGates Decision[]
+  promptRatings PromptRating[]
+  promptWorkflows PromptWorkflow[]
+  workflowRuns  WorkflowRun[]
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model WorkflowArtifact {
+  id             String   @id @default(cuid())
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  stage          String
+  command        String?
+  title          String
+  markdown       String
+  structuredJson String
+  version        Int      @default(1)
+  supersedesId   String?
+  status         String   @default("DRAFT")
+  isEdited       Boolean  @default(false)
+  approvedAt     DateTime?
+  approvalNote   String?
+  runs           WorkflowRun[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([projectId, stage, version])
+}
+
+model WorkflowRun {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  command     String
+  stage       String
+  input       String
+  status      String   @default("RUNNING")
+  error       String?
+  artifactId  String?
+  artifact    WorkflowArtifact? @relation(fields: [artifactId], references: [id])
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([projectId, startedAt])
+  @@index([artifactId])
+}
+
+model WorkflowDecision {
+  id             String   @id @default(cuid())
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  stage          String
+  question       String
+  selectedOption String?
+  rationale      String?
+  isResolved     Boolean  @default(false)
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([projectId, stage])
+}
+
+model PromptWorkflow {
+  id                     String   @id @default(cuid())
+  projectId              String
+  project                Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  architectureArtifactId String
+  phases                 String
+  prompts                String
+  targetTools            String
+  status                 String   @default("READY")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  @@index([projectId])
 }
 
 model Prompt {
@@ -79,10 +174,62 @@ model Prompt {
   description   String
   content       String
   tags          String   // Comma separated
+  sourceStage   String?
+  projectId     String?
+  generatedFromProject Boolean @default(false)
   isFeatured    Boolean  @default(false)
   isDeveloper   Boolean  @default(false)
   userId        String?
   user          User?    @relation(fields: [userId], references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model WorkspaceContext {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  techStack       String?  // JSON string
+  designPrefs     String?  // JSON string
+  antiPatterns    String?  // JSON string
+  pastDecisions   String?  // JSON string
+  promptRatings   String?  // JSON string
+  defaultTool     String?  @default("Cursor")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model PromptRating {
+  id              String   @id @default(cuid())
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  phaseNumber     Int
+  rating          String
+  feedback        String?
+  phaseTitle      String?
+  createdAt       DateTime @default(now())
+
+  @@index([projectId, phaseNumber])
+  @@index([userId])
+}
+
+model Decision {
+  id              String   @id @default(cuid())
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id])
+  type            String
+  stage           String
+  question        String
+  options         String
+  resolved        Boolean  @default(false)
+  resolution      String?
+  source          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([projectId, stage])
 }

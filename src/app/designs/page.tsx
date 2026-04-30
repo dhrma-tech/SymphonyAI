@@ -5,18 +5,28 @@ import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
 import { Button } from "@/components/shared/Button";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   Palette, Layout, Smartphone, Eye, 
-  Search, ArrowRight, ExternalLink, 
-  Layers, Copy, Check
+  ExternalLink, Layers, Copy, Check, type LucideIcon
 } from "lucide-react";
+
+type DesignItem = {
+  name: string;
+  desc: string;
+  icon: LucideIcon;
+  category: string;
+  bg: string;
+  tags: string[];
+  prompt: string;
+};
 
 export default function DesignLibraryPage() {
   const [activeCategory, setActiveCategory] = useState("All");
 
+  const categories = ["All", ...Array.from(new Set(DESIGN_DATA.map((design) => design.category)))];
   const filteredDesigns = DESIGN_DATA.filter(d => 
-    activeCategory === "All" || d.category === d.category
+    activeCategory === "All" || d.category === activeCategory
   );
 
   return (
@@ -28,12 +38,27 @@ export default function DesignLibraryPage() {
           <div className="text-[10px] uppercase tracking-widest font-bold text-muted mb-4">Visual References</div>
           <h1 className="text-5xl md:text-7xl font-serif tracking-tight mb-8">Web Design Library</h1>
           <p className="text-lg text-muted max-w-2xl font-light leading-relaxed">
-            A curated archive of high-end visual patterns, design systems, and layout inspirations for modern digital products.
+            Visual references for later design review passes. V1 keeps these as inspiration while Workspace focuses on product, plan, architecture, and prompt gates.
           </p>
         </header>
 
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-8 mb-12 border-b border-border-subtle">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={cn(
+                "h-12 px-6 rounded-2xl text-[10px] uppercase tracking-widest font-bold transition-all border shrink-0",
+                activeCategory === category ? "bg-black text-white border-transparent shadow-lg" : "bg-white text-muted border-border-subtle hover:bg-section"
+              )}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {DESIGN_DATA.map((design, i) => (
+          {filteredDesigns.map((design, i) => (
             <motion.div
               key={design.name}
               initial={{ opacity: 0, y: 20 }}
@@ -51,7 +76,7 @@ export default function DesignLibraryPage() {
   );
 }
 
-function DesignCard({ design }: { design: any }) {
+function DesignCard({ design }: { design: DesignItem }) {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = () => {

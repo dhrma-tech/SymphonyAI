@@ -1,28 +1,24 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { createProject, listProjects } from "@/lib/workflow-service";
+
+function sessionUserId(session: unknown) {
+  return (session as { user?: { id?: string } } | null)?.user?.id || null;
+}
 
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
   try {
     const body = await req.json();
-    const { title, idea, synopsis, features, design, phases } = body;
+    const { idea } = body;
 
-    const project = await db.project.create({
-      data: {
-        title,
-        idea,
-        synopsis: synopsis || "",
-        features: JSON.stringify(features || []),
-        design: JSON.stringify(design || {}),
-        phases: JSON.stringify(phases || []),
-        status: "Complete",
-        activePhase: 1,
-        userId: session?.user?.id || null, // Optional for now
-      },
-    });
+    if (!idea || typeof idea !== "string" || !idea.trim()) {
+      return NextResponse.json({ error: "Idea is required" }, { status: 400 });
+    }
+
+    const project = await createProject(idea.trim(), sessionUserId(session));
 
     return NextResponse.json(project);
   } catch (error) {
@@ -35,14 +31,11 @@ export async function GET() {
   const session = await getServerSession(authOptions);
 
   try {
-    const projects = await db.project.findMany({
-      where: session?.user?.id ? { userId: session.user.id } : {}, // Filter if logged in
-      orderBy: { updatedAt: "desc" },
-      take: 20,
-    });
+    const projects = await listProjects(sessionUserId(session));
     return NextResponse.json(projects);
   } catch (error) {
     console.error("Workspace GET Error:", error);
     return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });
   }
 }
+

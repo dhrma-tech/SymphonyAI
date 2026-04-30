@@ -3,23 +3,30 @@
 import { useState } from "react";
 import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
-import { Button } from "@/components/shared/Button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Search, Zap, Terminal, Palette, Filter, 
-  Bookmark, ArrowRight, Code, Eye, Layers, 
-  Database, ShieldCheck, FileText, Layout, 
-  Smartphone, Globe, Cpu, Lock
+  Search, ArrowRight, Layers, Palette,
+  Database, ShieldCheck, Layout, 
+  Lock, type LucideIcon
 } from "lucide-react";
 import { DetailModal } from "@/components/shared/DetailModal";
 
-const categories = ["All", "Frontend", "Backend", "Design", "AI Logic", "DevOps"];
+const categories = ["All", "Frontend", "Backend", "System Design", "AI Logic", "DevOps"];
+
+type LibraryItem = {
+  title: string;
+  desc: string;
+  icon: LucideIcon;
+  category: string;
+  tags: string[];
+  content: string;
+};
 
 export default function LibraryPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<LibraryItem | null>(null);
 
   const filteredItems = LIBRARY_DATA.filter(item => {
     const matchesCategory = activeCategory === "All" || item.category === activeCategory;
@@ -34,10 +41,10 @@ export default function LibraryPage() {
       
       <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
         <header className="mb-20">
-          <div className="text-[10px] uppercase tracking-widest font-bold text-muted mb-4">Prompt Artifacts</div>
+          <div className="text-[10px] uppercase tracking-widest font-bold text-muted mb-4">Workflow Artifacts</div>
           <h1 className="text-5xl md:text-7xl font-serif tracking-tight mb-8">The Pattern Library</h1>
           <p className="text-lg text-muted max-w-2xl font-light leading-relaxed">
-            A curated collection of production-ready prompt patterns for full-stack engineering, design systems, and agentic orchestration.
+            Curated patterns for the guided build flow: product definition, scope review, architecture lock, and final prompt handoff.
           </p>
         </header>
 
@@ -103,7 +110,7 @@ export default function LibraryPage() {
   );
 }
 
-function LibraryCard({ item, onClick }: { item: any, onClick: () => void }) {
+function LibraryCard({ item, onClick }: { item: LibraryItem, onClick: () => void }) {
   return (
     <div 
       onClick={onClick}
@@ -139,51 +146,51 @@ function LibraryCard({ item, onClick }: { item: any, onClick: () => void }) {
 
 const LIBRARY_DATA = [
   { 
-    title: "Chain of Density", 
-    desc: "A technique for summarizing complex information without losing editorial nuance or data density.", 
+    title: "Office-Hours Product Definition", 
+    desc: "Force specificity before planning: real user, demand evidence, status quo, wedge, constraints, and premises.", 
     icon: Layers, 
     category: "AI Logic", 
-    tags: ["Expert", "Synthesis"],
-    content: "Act as a synthesis expert. Rewrite the provided input to increase information density while maintaining a cinematic tone. Identify high-stakes verbs and technical nouns."
+    tags: ["Define", "Product"],
+    content: "Create a product definition artifact with Problem Statement, Demand Evidence, Status Quo, Target User, Narrowest Wedge, Constraints, Premises, Alternatives, Recommendation, and Assignment."
   },
   { 
-    title: "Prisma Schema Gen", 
-    desc: "Generate optimized database schemas with relations and indexes from natural language descriptions.", 
+    title: "Scope Review Gate", 
+    desc: "Challenge the idea before architecture work starts. Decide what expands, what shrinks, and what is explicitly deferred.", 
     icon: Database, 
-    category: "Backend", 
-    tags: ["Data", "Prisma"],
-    content: "Generate a full Prisma schema based on the following requirements. Ensure all CUID IDs, explicit relations, and performance indexes are included."
+    category: "AI Logic", 
+    tags: ["Plan", "Scope"],
+    content: "Review the product definition in Selective Expansion mode. Output critique, expansion options, reduction options, accepted scope, rejected scope, product risks, and the final product plan."
   },
   { 
-    title: "React Token System", 
-    desc: "Convert a design vision into a structured Tailwind configuration and global CSS tokens.", 
+    title: "Architecture Lock", 
+    desc: "Turn an approved product plan into system architecture, data flow, state machine, failure paths, security, and tests.", 
     icon: Palette, 
-    category: "Design", 
-    tags: ["Tailwind", "CSS"],
-    content: "Translate the design tokens provided into a tailwind.config.ts file. Focus on spacing scales, semantic colors, and shadow elevations for high-end SaaS products."
+    category: "System Design", 
+    tags: ["Eng", "Review"],
+    content: "Create a locked architecture artifact with System Architecture, Data Flow, State Machine, Error Paths, Failure Modes, Security Concerns, Test Plan, Acceptance Criteria, and Final Locked Architecture."
   },
   { 
-    title: "OAuth Auth Logic", 
-    desc: "Secure implementation of NextAuth with social providers and session management.", 
+    title: "Prompt Workflow Handoff", 
+    desc: "Generate build prompts only from the locked architecture so implementation follows approved decisions.", 
     icon: Lock, 
-    category: "Backend", 
-    tags: ["Auth", "Security"],
-    content: "Implement NextAuth configuration for a Next.js 15 application. Include Google/GitHub providers and Prisma adapters. Scope all project data to the session user ID."
+    category: "AI Logic", 
+    tags: ["Prompts", "Handoff"],
+    content: "Create copy-ready prompts grouped by tool and phase. Each prompt must cite the locked architecture, acceptance criteria, test plan, and known constraints."
   },
   { 
-    title: "Cinematic Layouts", 
-    desc: "Prompt patterns for creating high-end, responsive landing pages with Framer Motion.", 
+    title: "Readiness Dashboard", 
+    desc: "A compact status pattern for showing Product Defined, Plan Reviewed, Architecture Locked, and Prompts Ready.", 
     icon: Layout, 
     category: "Frontend", 
-    tags: ["UI", "Motion"],
-    content: "Design a high-end SaaS landing page using a 12-column grid. Implement 'Liquid Motion' using Framer Motion. Focus on typography rhythm and whitespace."
+    tags: ["UI", "Status"],
+    content: "Build a stage dashboard with four gates. Each gate shows locked, current, draft, approved, or ready state and links to the latest artifact."
   },
   { 
-    title: "API Rate Limiting", 
-    desc: "Configure edge-native rate limiting and protection for serverless API routes.", 
+    title: "Artifact Version Trail", 
+    desc: "Preserve regenerated stage outputs as versions instead of overwriting the product decision history.", 
     icon: ShieldCheck, 
-    category: "DevOps", 
-    tags: ["Security", "Edge"],
-    content: "Create a middleware.ts implementation for rate limiting API routes using Upstash Redis. Ensure 429 responses are returned for excessive requests."
+    category: "Backend", 
+    tags: ["Prisma", "History"],
+    content: "Store each stage output as a WorkflowArtifact with stage, markdown, structuredJson, version, supersedesId, and status."
   }
 ];

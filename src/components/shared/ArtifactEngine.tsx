@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Copy, Download, ExternalLink, Check, Code, FileText, Terminal, Palette } from "lucide-react";
+import { X, Copy, Download, ExternalLink, Check, Code, FileText, Terminal, Palette, type LucideIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +10,7 @@ interface Artifact {
   filename: string;
   language: string;
   content: string;
-  icon: any;
+  icon: LucideIcon;
 }
 
 const MOCK_ARTIFACTS: Artifact[] = [
@@ -53,15 +53,19 @@ export function ArtifactEngine({ isOpen, onClose, isStreaming }: ArtifactEngineP
     if (isStreaming && isOpen) {
       let i = 0;
       const fullContent = activeTab.content;
-      setDisplayedContent("");
+      const reset = setTimeout(() => setDisplayedContent(""), 0);
       const interval = setInterval(() => {
         setDisplayedContent(fullContent.slice(0, i));
         i += 5;
         if (i > fullContent.length) clearInterval(interval);
       }, 10);
-      return () => clearInterval(interval);
+      return () => {
+        clearTimeout(reset);
+        clearInterval(interval);
+      };
     } else {
-      setDisplayedContent(activeTab.content);
+      const update = setTimeout(() => setDisplayedContent(activeTab.content), 0);
+      return () => clearTimeout(update);
     }
   }, [isStreaming, isOpen, activeTab]);
 

@@ -53,7 +53,7 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
   }, [session]);
 
   useEffect(() => {
-    fetchHistory();
+    void Promise.resolve().then(fetchHistory);
   }, [fetchHistory]);
 
   const saveProject = async (data: Partial<Project>) => {

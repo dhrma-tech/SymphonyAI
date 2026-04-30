@@ -3,20 +3,26 @@
 import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
 import { Button } from "@/components/shared/Button";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { 
   Layout, Smartphone, BarChart, ShoppingCart, 
-  Rocket, Cpu, Play, ExternalLink, ArrowRight 
+  Rocket, Cpu, Play, ExternalLink, type LucideIcon 
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useWorkspace } from "@/lib/context/WorkspaceContext";
+
+type TemplateItem = {
+  title: string;
+  desc: string;
+  icon: LucideIcon;
+  category: string;
+};
 
 export default function TemplatesPage() {
   const router = useRouter();
   const { saveProject, resetWorkspace } = useWorkspace();
 
-  const handleUseTemplate = async (template: any) => {
+  const handleUseTemplate = async (template: TemplateItem) => {
     resetWorkspace();
     await saveProject({
       title: template.title,

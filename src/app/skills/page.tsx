@@ -7,12 +7,20 @@ import { Button } from "@/components/shared/Button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Zap, Brain, Code, Terminal, 
-  Search, ArrowRight, Layers, 
-  MessageSquare, Sparkles, Cpu
+  Brain, Code, Terminal, 
+  ArrowRight, Layers, 
+  MessageSquare, Cpu, type LucideIcon
 } from "lucide-react";
 
 const skillCategories = ["All", "Prompt Engineering", "Orchestration", "System Design"];
+
+type SkillItem = {
+  title: string;
+  desc: string;
+  icon: LucideIcon;
+  category: string;
+  techniques: string[];
+};
 
 export default function SkillsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -28,9 +36,9 @@ export default function SkillsPage() {
       <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
         <header className="mb-20">
           <div className="text-[10px] uppercase tracking-widest font-bold text-muted mb-4">Core Competencies</div>
-          <h1 className="text-5xl md:text-7xl font-serif tracking-tight mb-8">LLM Skills</h1>
+          <h1 className="text-5xl md:text-7xl font-serif tracking-tight mb-8">Workflow Skills</h1>
           <p className="text-lg text-muted max-w-2xl font-light leading-relaxed">
-            Advanced techniques for prompt engineering, multi-turn orchestration, and complex agentic reasoning.
+            Practical techniques that power the guided workspace: forcing questions, scope pressure, architecture review, and prompt handoff.
           </p>
         </header>
 
@@ -72,7 +80,7 @@ export default function SkillsPage() {
   );
 }
 
-function SkillCard({ skill }: { skill: any }) {
+function SkillCard({ skill }: { skill: SkillItem }) {
   return (
     <div className="bg-white border border-border-subtle rounded-[2rem] p-10 hover:shadow-xl hover:border-black/10 transition-all group flex flex-col h-full">
       <div className="flex justify-between items-start mb-10">
@@ -111,45 +119,45 @@ function SkillCard({ skill }: { skill: any }) {
 
 const SKILLS_DATA = [
   { 
-    title: "Chain of Density", 
-    desc: "A recursive summarization technique that increases information density without losing semantic detail.", 
+    title: "Forcing Questions", 
+    desc: "Questions that turn a vague idea into a specific user, demand signal, status quo, and narrow wedge.", 
     icon: Layers, 
     category: "Prompt Engineering", 
-    techniques: ["Information Density", "Recursive Refinement"]
+    techniques: ["Office Hours", "Demand Test"]
   },
   { 
-    title: "Few-Shot Patterning", 
-    desc: "Using structured examples to guide LLM output format, tone, and logical consistency.", 
+    title: "Scope Pressure", 
+    desc: "Review mode that separates the v1 product from expansion ideas, reductions, and deferred work.", 
     icon: Code, 
-    category: "Prompt Engineering", 
-    techniques: ["Pattern Recognition", "Format Injection"]
+    category: "System Design", 
+    techniques: ["Selective Expansion", "Reduction"]
   },
   { 
-    title: "Agentic Loop Controls", 
-    desc: "Orchestrating autonomous loops for research, code generation, and self-correction.", 
+    title: "Stage Gates", 
+    desc: "A workflow control pattern that blocks later outputs until earlier artifacts are approved.", 
     icon: Cpu, 
     category: "Orchestration", 
-    techniques: ["Self-Correction", "Multi-Step Loops"]
+    techniques: ["Approval Gates", "Readiness"]
   },
   { 
-    title: "System Role Persona", 
-    desc: "Building high-fidelity system prompts that define strict boundaries and specialized expertise.", 
+    title: "Architecture Lock", 
+    desc: "The engineering review artifact that forces data flow, state, failure modes, security, tests, and acceptance criteria.", 
     icon: Brain, 
     category: "System Design", 
-    techniques: ["Role Definition", "Boundary Setting"]
+    techniques: ["Failure Modes", "Test Matrix"]
   },
   { 
-    title: "Tool Integration Flow", 
-    desc: "Protocols for connecting LLMs to external APIs, terminal commands, and browser tools.", 
+    title: "Artifact Trail", 
+    desc: "Versioned records that let every downstream prompt read what was decided before it.", 
     icon: Terminal, 
     category: "Orchestration", 
-    techniques: ["API Interfacing", "Tool Schema"]
+    techniques: ["Prisma Records", "Versioning"]
   },
   { 
-    title: "Dynamic Context Mirror", 
-    desc: "Reflecting user intent back into the context window to maximize relevance and coherence.", 
+    title: "Prompt Handoff", 
+    desc: "Copy-ready build prompts generated from the locked architecture instead of a loose chat transcript.", 
     icon: MessageSquare, 
     category: "Orchestration", 
-    techniques: ["Intent Reflection", "Context Management"]
+    techniques: ["Tool Phases", "Acceptance Criteria"]
   }
 ];

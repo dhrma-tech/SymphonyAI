@@ -34,3 +34,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Workflow Inspiration
+
+SymphonyAI's guided product workflow is inspired by the MIT-licensed [GStack](https://github.com/garrytan/gstack) process: office-hours style product definition, plan review, engineering review, and prompt handoff. The implementation adapts those ideas for a database-backed web workspace rather than copying GStack's local CLI runtime.

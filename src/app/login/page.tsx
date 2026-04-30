@@ -64,7 +64,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-muted leading-relaxed">
-          Don't have an account? <Link href="#" className="text-primary font-medium hover:underline">Start for free</Link>
+          Don&apos;t have an account? <Link href="#" className="text-primary font-medium hover:underline">Start for free</Link>
         </p>
       </motion.div>
 

@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Search, Command, X, Zap, Terminal, Palette, FileText, ArrowRight, Star, Clock } from "lucide-react";
+import { Search, Command, Zap, Terminal, Palette, ArrowRight, Clock, type LucideIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface SearchResult {
   id: string;
@@ -12,7 +11,7 @@ interface SearchResult {
   title: string;
   desc: string;
   category: string;
-  icon: any;
+  icon: LucideIcon;
   href: string;
 }
 
@@ -20,26 +19,32 @@ export function CommandBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
+  const isWorkspace = pathname.startsWith("/workspace");
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (isWorkspace) return;
     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
       setIsOpen(prev => !prev);
     }
     if (e.key === "Escape") setIsOpen(false);
-  }, []);
+  }, [isWorkspace]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
-  const results: SearchResult[] = [
-    { id: "1", type: "skill" as any, title: "Chain of Density", desc: "Synthesize high-stakes information", category: "Creator", icon: Zap, href: "/library" },
-    { id: "2", type: "template" as any, title: "Luma Labs Clone", desc: "Cinematic AI product layout", category: "Designs", icon: Palette, href: "/designs" },
-    { id: "3", type: "skill" as any, title: "Agentic Logic", desc: "Multi-agent framework nodes", category: "Developer", icon: Terminal, href: "/library" },
-    { id: "4", type: "project" as any, title: "Meditation App", desc: "Resume your last orchestration", category: "Recent", icon: Clock, href: "/workspace" },
-  ].filter(r => r.title.toLowerCase().includes(query.toLowerCase()) || r.desc.toLowerCase().includes(query.toLowerCase()));
+  const baseResults: SearchResult[] = [
+    { id: "1", type: "skill", title: "Define Product", desc: "Office-hours style product definition", category: "Workflow", icon: Zap, href: "/workspace" },
+    { id: "2", type: "design", title: "Design Library", desc: "Visual references for later design review", category: "Designs", icon: Palette, href: "/designs" },
+    { id: "3", type: "skill", title: "Architecture Lock", desc: "Engineering review before prompt generation", category: "Workflow", icon: Terminal, href: "/library" },
+    { id: "4", type: "project", title: "Workspace", desc: "Resume your latest artifact trail", category: "Recent", icon: Clock, href: "/workspace" },
+  ];
+  const results = baseResults.filter(r => r.title.toLowerCase().includes(query.toLowerCase()) || r.desc.toLowerCase().includes(query.toLowerCase()));
+
+  if (isWorkspace) return null;
 
   return (
     <>
@@ -109,8 +114,8 @@ export function CommandBar() {
                     <div className="w-12 h-12 bg-section rounded-full flex items-center justify-center mx-auto mb-4">
                       <Search className="w-6 h-6 text-muted" />
                     </div>
-                    <div className="text-sm font-medium">No results found for "{query}"</div>
-                    <div className="text-xs text-muted mt-1">Try searching for "Creator" or "SaaS"</div>
+                    <div className="text-sm font-medium">No results found for {JSON.stringify(query)}</div>
+                    <div className="text-xs text-muted mt-1">Try searching for &quot;Workflow&quot; or &quot;Design&quot;</div>
                   </div>
                 )}
               </div>

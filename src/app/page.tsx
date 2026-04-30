@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Zap, ShieldCheck, Clock, Layers, Code, Palette, Smartphone, Layout, Rocket } from "lucide-react";
+import { ArrowRight, Zap, Layers, Palette, Smartphone, Layout, Rocket, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/shared/Button";
 import { Header } from "@/components/shared/Header";
 import { Footer } from "@/components/shared/Footer";
@@ -23,7 +23,7 @@ export default function LandingPage() {
             transition={{ delay: 0.1 }}
             className="text-6xl md:text-8xl lg:text-9xl font-serif tracking-tighter leading-[0.85] mb-10 max-w-5xl mx-auto"
           >
-            Turn ideas into <span className="text-muted italic">structured</span> execution.
+            Lock the plan before <span className="text-muted italic">you prompt</span> the build.
           </motion.h1>
 
           <motion.p
@@ -32,7 +32,7 @@ export default function LandingPage() {
             transition={{ delay: 0.2 }}
             className="text-lg md:text-xl text-muted max-w-2xl mx-auto font-light leading-relaxed mb-12"
           >
-            SymphonyAI bridges the gap between raw ideas and complex AI builds. Generate tool-specific prompts for planning, designing, and engineering digital products.
+            SymphonyAI turns raw product ideas into a guided artifact trail: define the product, refine the scope, lock the architecture, then generate prompts that are ready to build from.
           </motion.p>
 
           <motion.div
@@ -43,7 +43,7 @@ export default function LandingPage() {
           >
             <Link href="/workspace">
               <Button className="h-16 px-10 rounded-2xl text-[10px] uppercase tracking-widest font-bold shadow-2xl">
-                Start Building <ArrowRight className="w-4 h-4 ml-2" />
+                Open Workspace <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
             <Link href="/library">
@@ -76,18 +76,18 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <UseCase 
               icon={Layout} 
-              title="Landing Pages" 
-              desc="Convert a simple description into a high-end, cinematic web experience with specific prompts for Cursor and Framer Motion."
+              title="Product Definition" 
+              desc="Run office-hours style forcing questions that expose the user, demand, status quo, wedge, and premises before planning starts."
             />
             <UseCase 
               icon={Smartphone} 
-              title="SaaS Dashboards" 
-              desc="Generate relational schemas, authentication logic, and responsive UI nodes designed for production-ready products."
+              title="Plan Review" 
+              desc="Challenge scope, decide what belongs in v1, and keep rejected ideas visible instead of losing them in chat history."
             />
             <UseCase 
               icon={Rocket} 
-              title="Full-Stack Apps" 
-              desc="Orchestrate multi-phase builds across Claude and GitHub Copilot with synchronized prompts for frontend and backend."
+              title="Architecture Lock" 
+              desc="Require data flow, state, error paths, security, tests, and acceptance criteria before any final build prompt is created."
             />
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function LandingPage() {
       <section className="py-32 px-6">
         <div className="max-w-4xl mx-auto text-center mb-20">
           <div className="text-[10px] uppercase tracking-widest font-bold text-muted mb-4">The Workflow</div>
-          <h2 className="text-4xl md:text-6xl font-serif tracking-tight">Three steps to execution.</h2>
+          <h2 className="text-4xl md:text-6xl font-serif tracking-tight">Four gates before build mode.</h2>
         </div>
 
         <div className="max-w-5xl mx-auto relative">
@@ -106,20 +106,20 @@ export default function LandingPage() {
           <div className="space-y-32 relative z-10">
             <Step 
               number="01" 
-              title="Describe your vision." 
-              desc="Type your idea in plain English. Our Discovery engine analyzes intent, technology needs, and project scope instantly."
+              title="Define the product." 
+              desc="Capture the real problem, target user, demand evidence, constraints, premises, and narrowest useful wedge."
               align="left"
             />
             <Step 
               number="02" 
-              title="Refine the architecture." 
-              desc="Answer clarifying questions to sharpen the blueprint. We suggest features, tech stacks, and visual design tokens."
+              title="Refine the idea." 
+              desc="Pressure-test scope, expand only where it matters, and write down what is explicitly not in v1."
               align="right"
             />
             <Step 
               number="03" 
-              title="Get tool-ready prompts." 
-              desc="SymphonyAI generates optimized prompts for each phase. Copy, paste into Claude or Cursor, and watch your product come to life."
+              title="Lock architecture, then prompt." 
+              desc="Approve the technical plan first. Final prompts are generated from the locked architecture, not a loose conversation."
               align="left"
             />
           </div>
@@ -130,15 +130,15 @@ export default function LandingPage() {
       <section className="py-32 px-6 bg-black text-white">
         <div className="max-w-7xl mx-auto">
           <header className="mb-20">
-            <h2 className="text-4xl md:text-6xl font-serif tracking-tight mb-8">Beyond generation.</h2>
-            <p className="text-lg text-white/40 max-w-xl font-light">Curated resources to accelerate every layer of your digital product build.</p>
+            <h2 className="text-4xl md:text-6xl font-serif tracking-tight mb-8">Beyond prompting.</h2>
+            <p className="text-lg text-white/40 max-w-xl font-light">A serious workspace for product thinking, architecture gates, and prompt workflows that remember what was decided.</p>
           </header>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <PillarCard icon={Layers} title="Prompt Library" desc="Curated patterns for UI, Logic, and AI." href="/library" />
-            <PillarCard icon={Layout} title="Templates" desc="Ready-to-use project blueprints." href="/templates" />
-            <PillarCard icon={Zap} title="LLM Skills" desc="Advanced techniques for prompt engineering." href="/library" />
-            <PillarCard icon={Palette} title="Design System" desc="Visual tokens, colors, and font pairings." href="/library" />
+            <PillarCard icon={Layers} title="Workflow Library" desc="Patterns for product, planning, engineering, and prompts." href="/library" />
+            <PillarCard icon={Layout} title="Templates" desc="Starting points for common guided build flows." href="/templates" />
+            <PillarCard icon={Zap} title="LLM Skills" desc="Techniques for decisions, review gates, and prompt handoff." href="/skills" />
+            <PillarCard icon={Palette} title="Design References" desc="Visual directions for the design review stage later." href="/designs" />
           </div>
         </div>
       </section>
@@ -148,7 +148,7 @@ export default function LandingPage() {
   );
 }
 
-function UseCase({ icon: Icon, title, desc }: any) {
+function UseCase({ icon: Icon, title, desc }: { icon: LucideIcon; title: string; desc: string }) {
   return (
     <div className="space-y-6 group">
       <div className="w-14 h-14 bg-white border border-border-subtle rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all shadow-sm">
@@ -160,7 +160,7 @@ function UseCase({ icon: Icon, title, desc }: any) {
   );
 }
 
-function Step({ number, title, desc, align }: any) {
+function Step({ number, title, desc, align }: { number: string; title: string; desc: string; align: "left" | "right" }) {
   return (
     <div className={cn("flex flex-col md:flex-row items-center gap-12", align === "right" && "md:flex-row-reverse")}>
       <div className="w-full md:w-1/2 flex flex-col justify-center">
@@ -175,7 +175,7 @@ function Step({ number, title, desc, align }: any) {
   );
 }
 
-function PillarCard({ icon: Icon, title, desc, href }: any) {
+function PillarCard({ icon: Icon, title, desc, href }: { icon: LucideIcon; title: string; desc: string; href: string }) {
   return (
     <Link href={href} className="block p-10 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-white/10 transition-all group h-full">
       <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-10 group-hover:scale-110 transition-transform">

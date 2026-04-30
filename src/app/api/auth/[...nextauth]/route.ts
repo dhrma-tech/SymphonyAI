@@ -3,6 +3,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import type { Session } from "next-auth";
+import type { AdapterUser } from "next-auth/adapters";
 
 export const authOptions = {
   adapter: PrismaAdapter(db),
@@ -17,9 +19,9 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    session: async ({ session, user }: { session: any; user: any }) => {
+    session: async ({ session, user }: { session: Session; user: AdapterUser }) => {
       if (session.user) {
-        session.user.id = user.id;
+        (session.user as Session["user"] & { id?: string }).id = user.id;
       }
       return session;
     },
